@@ -12,7 +12,7 @@ library(selectr)
 library(xml2)
 ```
 
-Direcciones URL con las conferencias. Parece que no hubo conferencia el 7 o el 8 de marzo de 2020. Conferencias hasta el 11 de abril.
+Direcciones URL con las conferencias. Parece que no hubo conferencia el 7 o el 8 de marzo de 2020. Conferencias hasta el 12 de abril.
 
 ```{r}
 url_conferencias <- c("https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-secretaria-de-salud-informe-diario-sobre-coronavirus-covid-19-en-mexico?idiom=es",
@@ -56,7 +56,8 @@ url_conferencias <- c("https://www.gob.mx/presidencia/es/articulos/version-esten
 "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239987?idiom=es",
 "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240054?idiom=es",
 "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240119?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240164?idiom=es"
+"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240164?idiom=es",
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240181?idiom=es"
 )
 
 ```
@@ -80,20 +81,24 @@ dame_texto <- function(pagina){
 #Obtener texto de la conferencia
   texto <- html_nodes(pagina, ".article-body") %>% 
     html_text() %>% 
-    str_replace_all("\r\n\r\n", "\n")
+    str_replace_all("\r\n\r\n", "\n") %>% 
+    str_replace_all("\u200B", "")
   return(texto)
 }
 
 dame_archivo <- function(url_doc, directorio_corpus){
 #Crea el documento, lo nombra con su fecha y lo coloca en un directorio especificado  
+  if (dir.exists(directorio_corpus) == FALSE){
+    dir.create(directorio_corpus)
+    }
   pagina <- read_html(url_doc)
   fecha <- dame_fecha(pagina)
   texto <- dame_texto(pagina)
-  
   nombre_archivo = str_c(fecha, ".txt")
   archivo <- file(str_c(directorio_corpus, nombre_archivo, sep="/"), encoding= "utf8")
   writeLines(texto, archivo)
-  gc()
+  on.exit(close(archivo))
+  #gc()
 }
 
 ```
@@ -102,12 +107,10 @@ Armar el corpus:
 
 ```{R}
 
-if (dir.exists(directorio_corpus) == FALSE){
-    dir.create(directorio_corpus)
-}
 
 for (direccion in url_conferencias) {
   dame_archivo(direccion, "corpus_simple")
+  Sys.sleep(10)
 }
 
 ```
