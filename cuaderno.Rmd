@@ -58,7 +58,8 @@ url_conferencias <- c("https://www.gob.mx/presidencia/es/articulos/version-esten
 "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240119?idiom=es",
 "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240164?idiom=es",
 "https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240181?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240239?idiom=es"
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240239?idiom=es",
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240295?idiom=es"
 )
 
 ```
