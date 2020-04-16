@@ -59,7 +59,8 @@ url_conferencias <- c("https://www.gob.mx/presidencia/es/articulos/version-esten
 "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240164?idiom=es",
 "https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240181?idiom=es",
 "https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240239?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240295?idiom=es"
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240295?idiom=es",
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240384?idiom=es"
 )
 
 ```
@@ -105,7 +106,7 @@ dame_archivo <- function(url_doc, directorio_corpus){
 
 ```
 
-Armar el corpus:
+Armar el corpus (incluye una pausa después de cada archivo descargado):
 
 ```{R}
 
@@ -115,4 +116,14 @@ for (direccion in url_conferencias) {
   Sys.sleep(10)
 }
 
+```
+
+Expresiones regulares útiles:
+
+```
+#Solución simplona para capturar a los interlocutores.
+^[A-Z].+:
+
+#Remover los separadores e identificadores finales
+---\n \n.*
 ```
