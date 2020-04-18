@@ -12,7 +12,7 @@ library(selectr)
 library(xml2)
 ```
 
-Direcciones URL con las conferencias. Parece que no hubo conferencia el 7 o el 8 de marzo de 2020. Conferencias hasta el 12 de abril.
+Direcciones URL con las conferencias. Parece que no hubo conferencia el 7 o el 8 de marzo de 2020. Conferencias hasta el 17 de abril.
 
 ```{r}
 url_conferencias <- c("https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-secretaria-de-salud-informe-diario-sobre-coronavirus-covid-19-en-mexico?idiom=es",
@@ -60,7 +60,9 @@ url_conferencias <- c("https://www.gob.mx/presidencia/es/articulos/version-esten
 "https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240181?idiom=es",
 "https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240239?idiom=es",
 "https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240295?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240384?idiom=es"
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240384?idiom=es",
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240448?idiom=es",
+"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240538?idiom=es"
 )
 
 ```
@@ -122,8 +124,27 @@ Expresiones regulares útiles:
 
 ```
 #Solución simplona para capturar a los interlocutores.
-^[A-Z].+:
+^[A-Z][A-Z].*[A-Z](?=:)
 
 #Remover los separadores e identificadores finales
 ---\n \n.*
+```
+
+Pruebas para extraer interlocutores (aún con fallos):
+
+```{R}
+
+dame_interlocutores <- function(doc) {
+  
+  interlocutores <- readLines(doc, encoding = "UTF-8") %>% 
+    str_extract("^[A-Z][A-Z].*[A-Z](?=:)") %>% 
+    unique()
+  
+  return(interlocutores)
+}
+
+"corpus_simple/2020-04-15.txt" %>% 
+  dame_interlocutores()
+
+
 ```
