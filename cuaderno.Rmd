@@ -12,62 +12,10 @@ library(selectr)
 library(xml2)
 ```
 
-Direcciones URL con las conferencias. Parece que no hubo conferencia el 7 o el 8 de marzo de 2020. Conferencias hasta el 17 de abril.
+Ahora cargamos las direcciones URL con las versiones estenográficas de los informes. Parece que no hubo conferencia el 7 o el 8 de marzo de 2020. Conferencias hasta el 20 de abril.
 
-```{r}
-url_conferencias <- c("https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-secretaria-de-salud-informe-diario-sobre-coronavirus-covid-19-en-mexico?idiom=es",
-  "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-covid-19-en-mexico-secretaria-de-salud?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-covid-19-en-mexico-secretaria-de-salud-236389?idiom=es", "https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-secretaria-de-salud?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-secretaria-de-salud-236648?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-secretaria-de-salud-236726?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-informe-diario-sobre-coronavirus-covid-19-en-mexico-secretaria-de-salud?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-informe-diario-sobre-coronavirus-covid-19-en-mexico-secretaria-de-salud-236979?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-informe-diario-sobre-coronavirus-covid-19-en-mexico-secretaria-de-salud-236995?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-informe-diario-sobre-coronavirus-covid-19-en-mexico-secretaria-de-salud-237135?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-237500?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-237799?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-237932?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-237955?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-237970?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-237991?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238145?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238381?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238467?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238640?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238671?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238712?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238806?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238857?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-238974?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239067?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239144?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239159?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239175?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239280?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239407?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239541?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239626?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239712?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239735?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239743?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239818?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-239987?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240054?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240119?idiom=es",
-"https://www.gob.mx/presidencia/es/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240164?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240181?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240239?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240295?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240384?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240448?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240538?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240551?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240565?idiom=es",
-"https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-240664?idiom=es"
-)
-
+```{R}
+url_conferencias <- c(readLines("urls_informes.txt"))
 ```
 
 Funciones y directorio para el corpus...
@@ -116,7 +64,7 @@ Armar el corpus (incluye una pausa después de cada archivo descargado):
 ```{R}
 
 
-for (direccion in url_conferencias) {
+for (direccion in url_conferencias[1]) {
   dame_archivo(direccion, "corpus_simple")
   Sys.sleep(10)
 }
