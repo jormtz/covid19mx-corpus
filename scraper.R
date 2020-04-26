@@ -58,12 +58,11 @@ dame_corpus <- function(lista_urls, directorio_destino){
 #Armar corpus
 ##########
 
-#Cargar direcciones URL
+#Cargar direcciones y armar corpus simple
 urls_informes <- c(readLines("urls_informes.txt"))
-
-#Armar corpus simple
 dame_corpus(urls_informes, "corpus_simple")
 
 #Descargar un solo archivo...
-#dame_archivo("url", "directorio_destino)
+#url_informe <- "https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-informe-diario-sobre-coronavirus-covid-19-en-mexico-241021?idiom=es"
+#dame_archivo(url_informe, "corpus_simple")
 
